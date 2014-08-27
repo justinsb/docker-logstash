@@ -19,7 +19,7 @@ input {
   }
 }
 output {
-  stdout { debug => true debug_format => "json"}
+  stdout { }
 EOF
     if [ "$EMBEDDED" = "true" ]; then
         cat << EOF >> /opt/logstash/logstash.conf
