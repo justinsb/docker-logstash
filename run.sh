@@ -9,9 +9,9 @@ if [ "$ES_HOST" = "127.0.0.1" ] ; then
 fi
 
 if [ "$CFG" != "" ]; then
-    wget $CFG -O /opt/logstash.conf --no-check-certificate
+    wget $CFG -O /opt/logstash/logstash.conf --no-check-certificate
 else
-    cat << EOF > /opt/logstash.conf
+    cat << EOF > /opt/logstash/logstash.conf
 input {
   syslog {
     type => syslog
@@ -22,16 +22,16 @@ output {
   stdout { debug => true debug_format => "json"}
 EOF
     if [ "$EMBEDDED" = "true" ]; then
-        cat << EOF >> /opt/logstash.conf
+        cat << EOF >> /opt/logstash/logstash.conf
   elasticsearch { embedded => $EMBEDDED }
 }
 EOF
     else
-        cat << EOF >> /opt/logstash.conf
+        cat << EOF >> /opt/logstash/logstash.conf
   elasticsearch { embedded => $EMBEDDED host => "$ES_HOST" port => $ES_PORT }
 }
 EOF
    fi
 fi
 
-java -jar /opt/logstash.jar agent -f /opt/logstash.conf -- web --backend elasticsearch://$ES_HOST:$ES_PORT/
+/opt/logstash/bin/logstash agent -f /opt/logstash/logstash.conf -- web --backend elasticsearch://$ES_HOST:$ES_PORT/

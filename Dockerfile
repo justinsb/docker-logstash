@@ -1,9 +1,9 @@
-FROM ubuntu:quantal
+FROM ubuntu:trusty
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu quantal main universe multiverse" > /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get install -y wget openjdk-6-jre
-RUN wget http://logstash.objects.dreamhost.com/release/logstash-1.1.13-flatjar.jar -O /opt/logstash.jar --no-check-certificate
+RUN apt-get install -y wget openjdk-7-jre-headless
+RUN cd /opt && wget https://download.elasticsearch.org/logstash/logstash/logstash-1.4.2.tar.gz && tar zxf logstash-1.4.2.tar.gz && rm logstash-1.4.2.tar.gz
+RUN ln -s /opt/logstash-1.4.2 /opt/logstash
 ADD run.sh /usr/local/bin/run
 RUN chmod +x /usr/local/bin/run
 RUN rm -rf /tmp/*
