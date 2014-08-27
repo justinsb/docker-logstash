@@ -28,7 +28,7 @@ EOF
 EOF
     else
         cat << EOF >> /opt/logstash/logstash.conf
-  elasticsearch { embedded => $EMBEDDED host => "$ES_HOST" port => $ES_PORT }
+  elasticsearch { embedded => $EMBEDDED host => "$ES_HOST" port => $ES_PORT protocol => "http" }
 }
 EOF
    fi
